@@ -67,10 +67,10 @@ async def stream_handler(request: web.Request):
     try:
         path = request.match_info["path"]
         if match := re.search(r"^([a-zA-Z0-9_-]{6})(\d+)$", path):
-            secure_hash = match.group(1)
-            id = int(match.group(2))
+            secure_hash = match[1]
+            id = int(match[2])
         else:
-            id = int(re.search(r"(\d+)(?:\/\S+)?", path).group(1))
+            id = int(re.search(r"(\d+)(?:\/\S+)?", path)[1])
             secure_hash = request.rel_url.query.get("hash")
         return await media_streamer(request, id, secure_hash)
     except InvalidHash as e:

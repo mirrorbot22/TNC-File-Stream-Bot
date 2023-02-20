@@ -123,3 +123,33 @@ async def help_handler(bot, message):
 <b> I also support Channels, add me to you Channel and send any media files and see miracle✨ also send /list to know all commands""",
         disable_web_page_preview=True,
     )
+
+@StreamBot.on_message(filters.command("shortener_api") & filters.private)
+async def shortener_api_handler(bot, m):
+    user_id = m.from_user.id
+    user = await db.get_user(user_id)
+    api = user.get("shortener_api")
+    cmd = m.command
+    if len(cmd) == 1:
+        s = f"`/shortener_api (shortener_api)`\n\nCurrent shortener api : {api}\n\nEX: `/shortener_api 1aab74171e9891abd0ba799e3fd568c`"
+        return await m.reply(s)
+    
+    elif len(cmd) == 2:
+        api = cmd[1].strip()
+        await db.update_user_info(user_id, {"shortener_api": api})
+        await m.reply(f"Shortener API updated successfully to {api}")
+
+
+@StreamBot.on_message(filters.command("base_site") & filters.private)
+async def base_site_handler(bot, m):
+    user_id = m.from_user.id
+    user = await db.get_user(user_id)
+    cmd = m.command
+    site = user.get("base_site")
+    text = f"`/base_site (base_site)`\n\nCurrent base site: {site}\n\n EX: `/base_site shareus.in`"
+    if len(cmd) == 1:
+        return await m.reply(text=text, disable_web_page_preview=True)
+    elif len(cmd) == 2:
+        base_site = cmd[1].strip()
+        await db.update_user_info(user_id, {"base_site": base_site})
+        await m.reply("Base Site updated successfully")

@@ -60,8 +60,6 @@ class Var(object):
     AD4 = str(getenv('AD4', "")) 
     AD5 = str(getenv('AD5', "")) 
     USERS_CAN_USE = getenv('USERS_CAN_USE', False)
-    SHORTENER_API_KEY = getenv('SHORTENER_API_KEY', False)
-    BASE_SITE = getenv('BASE_SITE', False)
     ADMINS = (
         [int(i.strip()) for i in os.environ.get("ADMINS").split(",")]
         if os.environ.get("ADMINS")

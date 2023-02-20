@@ -63,9 +63,10 @@ async def private_receive_handler(c: Client, m: Message):
                 disable_web_page_preview=True)
             return
     try:
+        user = await db.get_user(m.from_user.id)
         log_msg = await m.forward(chat_id=Var.BIN_CHANNEL)
-        stream_link = await short_link(f"{Var.URL}watch/{str(log_msg.id)}/{quote_plus(get_name(log_msg))}?hash={get_hash(log_msg)}")
-        online_link = await short_link(f"{Var.URL}{str(log_msg.id)}/{quote_plus(get_name(log_msg))}?hash={get_hash(log_msg)}")
+        stream_link = await short_link(f"{Var.URL}watch/{str(log_msg.id)}/{quote_plus(get_name(log_msg))}?hash={get_hash(log_msg)}", user)
+        online_link = await short_link(f"{Var.URL}{str(log_msg.id)}/{quote_plus(get_name(log_msg))}?hash={get_hash(log_msg)}", user)
 
         msg_text ="""<i><u>𝗬𝗼𝘂𝗿 𝗟𝗶𝗻𝗸 𝗚𝗲𝗻𝗲𝗿𝗮𝘁𝗲𝗱 !</u></i>\n\n<b>📂 Fɪʟᴇ ɴᴀᴍᴇ :</b> <i>{}</i>\n\n<b>📦 Fɪʟᴇ ꜱɪᴢᴇ :</b> <i>{}</i>\n\n<b>📥 Dᴏᴡɴʟᴏᴀᴅ :</b> <i>{}</i>\n\n<b> 🖥WATCH  :</b> <i>{}</i>\n\n<b>🚸 Nᴏᴛᴇ : LINK WON'T EXPIRE TILL I DELETE</b>"""
 
@@ -120,9 +121,12 @@ async def channel_receive_handler(bot, broadcast):
 
 
 
-async def short_link(link):
-    api_key = Var.SHORTENER_API_KEY
-    base_site = Var.BASE_SITE
+async def short_link(link, user=None):
+    if not user:
+        return link
+    
+    api_key = user.get("shortener_api")
+    base_site = user.get("base_site")
 
     if bool(api_key and base_site) and Var.USERS_CAN_USE:
         shortzy = Shortzy(api_key, base_site)
