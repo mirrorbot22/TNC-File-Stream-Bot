@@ -41,9 +41,9 @@ class Var(object):
     )
     HAS_SSL=bool(getenv('HAS_SSL',False))
     if ON_HEROKU:
-        URL = f"https://{FQDN}/"
+        URL = f"https://{FQDN}/dl/"
     else:
-        URL = f'http{"s" if HAS_SSL else ""}://{FQDN}{"" if NO_PORT else f":{PORT}"}/'
+        URL = f'http{"s" if HAS_SSL else ""}://{FQDN}{"" if NO_PORT else f":{PORT}"}/dl/'
     DATABASE_URL = str(getenv('DATABASE_URL'))
     UPDATES_CHANNEL = str(getenv('UPDATES_CHANNEL', None))
     BANNED_CHANNELS = list(
@@ -64,3 +64,4 @@ class Var(object):
         if os.environ.get("ADMINS")
         else []
     )
+    IS_DISPLAY_DL_LINK = getenv('IS_DISPLAY_DL_LINK', False)
