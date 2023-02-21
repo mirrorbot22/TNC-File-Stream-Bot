@@ -13,6 +13,8 @@ load_dotenv()
 
 
 
+
+
 class Var(object):
     MULTI_CLIENT = False
     API_ID = int(getenv('API_ID'))
@@ -30,10 +32,7 @@ class Var(object):
     APP_NAME = None
     OWNER_USERNAME = str(getenv('OWNER_USERNAME'))
     REPLIT_USERNAME = str(getenv('REPLIT_USERNAME'))
-    if APP_NAME := str(getenv('APP_NAME')):
-        ON_HEROKU = True
-    else:
-        ON_HEROKU = False
+    ON_HEROKU = bool(APP_NAME := getenv('APP_NAME'))
     FQDN = (
         str(getenv('FQDN', BIND_ADRESS))
         if not ON_HEROKU or getenv('FQDN')
@@ -51,13 +50,13 @@ class Var(object):
             int(x)
             for x in str(getenv("BANNED_CHANNELS", "-1001362659779")).split()
         }
-    ) 
+    )
     BOT_USERNAME = str(getenv('BOT_USERNAME'))
-    AD1 = str(getenv('AD1', "")) 
-    AD2 = str(getenv('AD2', "")) 
-    AD3 = str(getenv('AD3', "")) 
-    AD4 = str(getenv('AD4', "")) 
-    AD5 = str(getenv('AD5', "")) 
+    AD1 = str(getenv('AD1', ""))
+    AD2 = str(getenv('AD2', ""))
+    AD3 = str(getenv('AD3', ""))
+    AD4 = str(getenv('AD4', ""))
+    AD5 = str(getenv('AD5', ""))
     USERS_CAN_USE = getenv('USERS_CAN_USE', False)
     ADMINS = (
         [int(i.strip()) for i in os.environ.get("ADMINS").split(",")]

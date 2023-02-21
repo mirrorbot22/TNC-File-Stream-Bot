@@ -23,7 +23,6 @@
       href="https://fonts.googleapis.com/css?family=Roboto:400,700"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="https://cdn.plyr.io/3.6.12/plyr.css" />
     <!-- popup -->
     <!-- popup -->
   </head>
@@ -324,42 +323,63 @@
             {{ ad1 | safe }}
 
             <!--Video Player Start-->
-            <div class="container">
-              <video
-                id="myVideo"
-                controls=""
-                src="{{ src }}"
-                width="100%"
-                height="auto"
-              >
-                Your browser does not support the video tag.
-              </video>
+            <video id="video-id"><source src="{{src}}" type="video/mp4" />
             </div>
-            <script src="https://cdn.plyr.io/3.6.12/plyr.js"></script>
+            <script src="https://cdn.fluidplayer.com/v3/current/fluidplayer.min.js"></script>
             <script>
-              const controls = [
-                "rewind",
-                "play",
-                "fast-forward",
-                "progress",
-                "current-time",
-                "duration",
-                "mute",
-                "volume",
-                "captions",
-                "settings",
-                "pip",
-                "airplay",
-                "fullscreen",
-              ];
-              document.addEventListener("DOMContentLoaded", () => {
-                const player = Plyr.setup("#myVideo", {
-                  controls,
-                  adTagUrl:"https://www.videosprofitnetwork.com/watch.xml?key=29654bca221e8261067ac49af92b392b",
-                  skipButton:{enabled: true, text: 'Skip ad', delay: 10}
-                });
-              });
-            </script>
+              var myFP = fluidPlayer(
+                  'video-id',	{
+            "layoutControls": {
+              "controlBar": {
+                "autoHideTimeout": 3,
+                "animated": true,
+                "autoHide": true,
+                "playbackRates": [
+                  "x2",
+                  "x1.5",
+                  "x1",
+                  "x0.5"
+                ]
+              },
+              "htmlOnPauseBlock": {
+                "html": null,
+                "height": null,
+                "width": null
+              },
+              "autoPlay": true,
+              "mute": true,
+              "allowTheatre": true,
+              "playPauseAnimation": true,
+              "playbackRateEnabled": true,
+              "allowDownload": false,
+              "playButtonShowing": true,
+              "fillToContainer": true,
+              "primaryColor": "#000",
+              "posterImage": ""
+            },
+            "vastOptions": {
+              "adList": [
+                {
+                  "roll": "preRoll",
+                  "vastTag": "https://www.videosprofitnetwork.com/watch.xml?key=29654bca221e8261067ac49af92b392b",
+                  "adText": ""
+                },
+                {
+                  "roll": "midRoll",
+                  "vastTag": "https://www.videosprofitnetwork.com/watch.xml?key=29654bca221e8261067ac49af92b392b",
+                  "adText": ""
+                },
+                {
+                  "roll": "postRoll",
+                  "vastTag": "https://www.videosprofitnetwork.com/watch.xml?key=29654bca221e8261067ac49af92b392b",
+                  "adText": ""
+                }
+              ],
+              "adCTAText": false,
+              "adCTATextPosition": ""
+            }
+          });
+          </script>
 
             {{ ad2 | safe }}
             <!--Video Player End-->
