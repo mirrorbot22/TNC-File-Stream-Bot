@@ -44,6 +44,7 @@ async def root_route_handler(_):
 @routes.get(r"/watch/{path:\S+}", allow_head=True)
 async def stream_handler(request: web.Request):
     try:
+        
         path = request.match_info["path"]
         if match := re.search(r"^([a-zA-Z0-9_-]{6})(\d+)$", path):
             secure_hash = match[1]

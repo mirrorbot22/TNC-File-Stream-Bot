@@ -29,16 +29,15 @@ class Var(object):
     NO_PORT = bool(getenv('NO_PORT', False))
     APP_NAME = None
     OWNER_USERNAME = str(getenv('OWNER_USERNAME'))
-    if 'DYNO' in environ:
+    REPLIT_USERNAME = str(getenv('REPLIT_USERNAME'))
+    if APP_NAME := str(getenv('APP_NAME')):
         ON_HEROKU = True
-        APP_NAME = str(getenv('APP_NAME'))
-
     else:
         ON_HEROKU = False
     FQDN = (
         str(getenv('FQDN', BIND_ADRESS))
         if not ON_HEROKU or getenv('FQDN')
-        else f'{APP_NAME}.herokuapp.com'
+        else f'{APP_NAME}.{REPLIT_USERNAME}.repl.co'
     )
     HAS_SSL=bool(getenv('HAS_SSL',False))
     if ON_HEROKU:

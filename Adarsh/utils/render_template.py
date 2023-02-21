@@ -7,16 +7,17 @@ from Adarsh.server.exceptions import InvalidHash
 import urllib.parse
 import logging
 import aiohttp
+from urllib.parse import quote_plus
 
-
-async def render_page(id, secure_hash):
+async def render_page(id, secure_hash, src=None):
     file_data = await get_file_ids(StreamBot, int(Var.BIN_CHANNEL), int(id))
     if file_data.unique_id[:6] != secure_hash:
         logging.debug(f'link hash: {secure_hash} - {file_data.unique_id[:6]}')
         logging.debug(f"Invalid hash for message with - ID {id}")
         raise InvalidHash
+  
 
-    src = urllib.parse.urljoin(Var.URL, f'{secure_hash}{str(id)}')
+    src = urllib.parse.urljoin(Var.URL, f'{id}/{quote_plus(file_data.file_name)}?hash={secure_hash}')
 
     tag = file_data.mime_type.split('/')[0].strip()
     file_size = humanbytes(file_data.file_size)
@@ -36,10 +37,12 @@ async def render_page(id, secure_hash):
     with open(template_file) as f:
         template = jinja2.Template(f.read())
 
+    file_name = file_data.file_name.replace("_", " ")
     return template.render(
         heading=heading, 
-        filename=file_data.file_name, 
-        src=src, file_size=file_size, 
+        filename=file_name, 
+        src=src, 
+        file_size=file_size, 
         bot_usename=Var.BOT_USERNAME,
         ad1=Var.AD1, 
         ad2=Var.AD2, 

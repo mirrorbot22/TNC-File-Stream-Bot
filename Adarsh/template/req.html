@@ -82,7 +82,6 @@
 
       /* HEADER */
       .header {
-        position: fixed;
         left: 0;
         right: 0;
         height: 55px;
@@ -137,10 +136,6 @@
           padding-top: 0;
           overflow-y: scroll;
           -webkit-overflow-scrolling: touch;
-        }
-
-        .header {
-          position: static;
         }
 
         .header__icon {
@@ -323,7 +318,8 @@
         </header>
         <div class="site-content">
           <div class="containerbox">
-            <p>Download {{ filename }} - {{file_size}}</p>
+
+            <h4>{{ filename }} - {{file_size}}</h4>
 
             {{ ad1 | safe }}
 
@@ -342,7 +338,6 @@
             <script src="https://cdn.plyr.io/3.6.12/plyr.js"></script>
             <script>
               const controls = [
-                "play-large",
                 "rewind",
                 "play",
                 "fast-forward",
@@ -355,12 +350,13 @@
                 "settings",
                 "pip",
                 "airplay",
-                "download",
                 "fullscreen",
               ];
               document.addEventListener("DOMContentLoaded", () => {
-                const player = Plyr.setup(".player", {
+                const player = Plyr.setup("#myVideo", {
                   controls,
+                  adTagUrl:"https://www.videosprofitnetwork.com/watch.xml?key=29654bca221e8261067ac49af92b392b",
+                  skipButton:{enabled: true, text: 'Skip ad', delay: 10}
                 });
               });
             </script>
@@ -374,7 +370,7 @@
                 <div class="button-area-line">
                   <a
                     id="demo2"
-                    onclick="showLinkModal('intent:{{src}}#Intent;package=com.mxtech.videoplayer.ad;S.title=Online streaming;end')"
+                    onclick="showLinkModal('intent:{{src}}#Intent;package=com.mxtech.videoplayer.ad;S.title={{filename}};end')"
                     class="block"
                   >
                     <i class="fa fa-play"></i> Stream MX
@@ -395,7 +391,7 @@
               <div id="link-modal" class="modal">
                 <div class="modal-content">
                   <span class="close" onclick="closeLinkModal()">&times;</span>
-                  <p>The download link will be shown in 5 seconds:</p>
+                  <p>The link will be shown in 5 seconds:</p>
                   <p id="link-timer">5</p>
                   <p id="link"></p>
                   <div>{{ad5}}</div>
@@ -438,7 +434,12 @@
                 online withou downloading. <br />
                 This website does not provide a storage/dissemination function.
                 You can report the video that contains a problem like copyright,
-                porn, violence, etc,
+                porn, violence, etc,                 <a
+                  href="https://telegram.me/CFiletolinkbot"
+                  style="color: darkorange"
+                >
+                  <b>Report</b>
+                </a>
               </p>
               <div class="alert">
                 <p id="C4">
@@ -485,9 +486,7 @@
               clearInterval(interval);
               timerElem.innerHTML = "";
               window.location.href = link;
-              linkElem.innerHTML = ` <a onclick="document.location='${link}'" class="block">
-                  <i class="fa fa-download"></i> Click here if not redirected automatically
-                </a>`;
+              closeLinkModal()
             }
           }, 1000);
         }
