@@ -47,6 +47,6 @@ class Database:
 
     async def update_user_info(self, user_id, value: dict, tag="$set"):
         user_id = int(user_id)
-        myquery = {"user_id": user_id}
+        myquery = {"id": user_id}
         newvalues = {tag: value}
         await self.col.update_one(myquery, newvalues)

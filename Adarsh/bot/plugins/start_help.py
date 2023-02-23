@@ -169,6 +169,7 @@ async def remove_shortener(c, m):
 async def remove_base_site(c, m):
     user_id = m.from_user.id
     user = await db.get_user(user_id)
+    print(user)
     if user.get("base_site"):
         await db.update_user_info(user_id, {"base_site": None})
         await m.reply("Base Site removed successfully")
