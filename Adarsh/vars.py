@@ -64,3 +64,4 @@ class Var(object):
         else []
     )
     IS_DISPLAY_DL_LINK = getenv('IS_DISPLAY_DL_LINK', False)
+    VIDEO_AD = getenv('VIDEO_AD', "")
