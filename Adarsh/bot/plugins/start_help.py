@@ -154,7 +154,7 @@ async def base_site_handler(bot, m):
         await db.update_user_info(user_id, {"base_site": base_site})
         await m.reply("Base Site updated successfully")
 
-@StreamBot.on_message(filters.command("remove_shortener") & filters.private)
+@StreamBot.on_message(filters.command("remove_shortener_api") & filters.private)
 async def remove_shortener(c, m):
     user_id = m.from_user.id
     user = await db.get_user(user_id)
