@@ -153,3 +153,24 @@ async def base_site_handler(bot, m):
         base_site = cmd[1].strip()
         await db.update_user_info(user_id, {"base_site": base_site})
         await m.reply("Base Site updated successfully")
+
+@StreamBot.on_message(filters.command("remove_shortener") & filters.private)
+async def remove_shortener(c, m):
+    user_id = m.from_user.id
+    user = await db.get_user(user_id)
+    if user.get("shortener_api"):
+        await db.update_user_info(user_id, {"shortener_api": None})
+        await m.reply("Shortener API removed successfully")
+    else:
+        await m.reply("You don't have any shortener API")
+
+
+@StreamBot.on_message(filters.command("remove_base_site") & filters.private)
+async def remove_base_site(c, m):
+    user_id = m.from_user.id
+    user = await db.get_user(user_id)
+    if user.get("base_site"):
+        await db.update_user_info(user_id, {"base_site": None})
+        await m.reply("Base Site removed successfully")
+    else:
+        await m.reply("You don't have any base site")
