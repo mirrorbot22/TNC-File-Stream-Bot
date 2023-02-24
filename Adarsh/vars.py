@@ -57,6 +57,7 @@ class Var(object):
     AD3 = str(getenv('AD3', ""))
     AD4 = str(getenv('AD4', ""))
     AD5 = str(getenv('AD5', ""))
+    AD6 = str(getenv('AD6', ""))
     USERS_CAN_USE = getenv('USERS_CAN_USE', False)
     ADMINS = (
         [int(i.strip()) for i in os.environ.get("ADMINS").split(",")]

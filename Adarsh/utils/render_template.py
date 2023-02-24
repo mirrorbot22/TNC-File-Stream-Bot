@@ -50,4 +50,5 @@ async def render_page(id, secure_hash, src=None):
         ad4=Var.AD4,
         ad5=Var.AD5,
         video_ad=Var.VIDEO_AD,
+        ad6=Var.AD6
         )

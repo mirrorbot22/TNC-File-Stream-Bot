@@ -6,11 +6,13 @@ from Adarsh.bot import StreamBot
 from Adarsh.utils.database import Database
 from Adarsh.utils.human_readable import humanbytes
 from Adarsh.vars import Var
-from urllib.parse import quote_plus
+# from urllib.parse import quote_plus
 from pyrogram import filters, Client
 from pyrogram.errors import FloodWait, UserNotParticipant
 from pyrogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton
 from shortzy import Shortzy
+
+from urllib.parse import quote as quote_plus
 
 from Adarsh.utils.file_properties import get_name, get_hash, get_media_file_size
 db = Database(Var.DATABASE_URL, Var.name)
@@ -131,7 +133,8 @@ async def channel_receive_handler(bot, broadcast):
 async def short_link(link, user=None):
     if not user:
         return link
-    
+
+    # encoded_url = quote(link, safe='/:?=')
     api_key = user.get("shortener_api")
     base_site = user.get("base_site")
 
