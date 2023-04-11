@@ -9,5 +9,5 @@ apscheduler
 requests
 psutil
 pyromod
-jinja
+jinja2
 shortzy
