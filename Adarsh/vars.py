@@ -36,7 +36,7 @@ class Var(object):
     FQDN = (
         str(getenv('FQDN', BIND_ADRESS))
         if not ON_HEROKU or getenv('FQDN')
-        else f'{APP_NAME}.{REPLIT_USERNAME}.repl.co'
+        else f'{APP_NAME}-{REPLIT_USERNAME}.koyeb.app'
     )
     HAS_SSL=bool(getenv('HAS_SSL',False))
     if ON_HEROKU:
